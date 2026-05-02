@@ -113,6 +113,43 @@
             font-size: 14px;
             text-transform: uppercase;
         }
+        .mobile-controls {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            justify-content: center;
+            gap: 20px;
+            z-index: 100;
+        }
+        .dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(2, 60px);
+            gap: 5px;
+        }
+        .ctrl-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--neon-yellow);
+            border-radius: 10px;
+            color: var(--neon-yellow);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ctrl-btn:active {
+            background: var(--neon-yellow);
+            color: black;
+        }
+        @media (max-width: 768px) {
+            .mobile-controls { display: flex; }
+        }
         .back-btn {
             position: absolute;
             top: 20px;
@@ -138,7 +175,7 @@
     </style>
 </head>
 <body>
-    <a href="../index.html" class="back-btn">← Back to Arcade</a>
+    <a href="../../index.html" class="back-btn">← Back to Arcade</a>
     <div class="ui-panel">
         <div>Score: <span id="score">0</span></div>
         <div>Lives: <span id="lives">3</span></div>
@@ -167,6 +204,16 @@
             <h1 id="ready-text">READY!</h1>
         </div>
     </div>
+
+    <div class="mobile-controls">
+        <div class="dpad">
+            <div style="grid-column: 2" class="ctrl-btn" onmousedown="setDir('UP')" ontouchstart="setDir('UP')">↑</div>
+            <div style="grid-row: 2; grid-column: 1" class="ctrl-btn" onmousedown="setDir('LEFT')" ontouchstart="setDir('LEFT')">←</div>
+            <div style="grid-row: 2; grid-column: 2" class="ctrl-btn" onmousedown="setDir('DOWN')" ontouchstart="setDir('DOWN')">↓</div>
+            <div style="grid-row: 2; grid-column: 3" class="ctrl-btn" onmousedown="setDir('RIGHT')" ontouchstart="setDir('RIGHT')">→</div>
+        </div>
+    </div>
+
     <div class="controls-hint">Arrows to Move • P to Pause</div>
 
     <script>
@@ -179,6 +226,10 @@
         const gameoverOverlay = document.getElementById('gameover-overlay');
         const readyOverlay = document.getElementById('ready-overlay');
         const finalScoreElement = document.getElementById('final-score');
+
+        function setDir(dir) {
+            player.nextDir = dir;
+        }
 
         const TILE_SIZE = 20;
         const ROWS = 21;

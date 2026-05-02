@@ -101,6 +101,42 @@
             font-size: 22px;
             color: #bdc3c7;
         }
+        .mobile-controls {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            justify-content: center;
+            gap: 20px;
+            z-index: 100;
+        }
+        .dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(2, 60px);
+            gap: 5px;
+        }
+        .ctrl-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid #fff;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ctrl-btn:active {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        @media (max-width: 768px) {
+            .mobile-controls { display: flex; }
+        }
         .back-btn {
             position: absolute;
             top: 20px;
@@ -122,7 +158,7 @@
     </style>
 </head>
 <body>
-    <a href="../index.html" class="back-btn">← Back to Arcade</a>
+    <a href="../../index.html" class="back-btn">← Back to Arcade</a>
     <div class="stats">Score: <span id="score">0</span></div>
     <div id="gameOver">
         <h1>GAME OVER</h1>
@@ -135,6 +171,15 @@
         <p>Press 'P' to Resume</p>
     </div>
     <canvas id="snakeGame" width="400" height="400"></canvas>
+    
+    <div class="mobile-controls">
+        <div class="dpad">
+            <div style="grid-column: 2" class="ctrl-btn" onmousedown="setDir('UP')" ontouchstart="setDir('UP')">↑</div>
+            <div style="grid-row: 2; grid-column: 1" class="ctrl-btn" onmousedown="setDir('LEFT')" ontouchstart="setDir('LEFT')">←</div>
+            <div style="grid-row: 2; grid-column: 2" class="ctrl-btn" onmousedown="setDir('DOWN')" ontouchstart="setDir('DOWN')">↓</div>
+            <div style="grid-row: 2; grid-column: 3" class="ctrl-btn" onmousedown="setDir('RIGHT')" ontouchstart="setDir('RIGHT')">→</div>
+        </div>
+    </div>
     <div class="instructions">Use Arrow Keys to move!</div>
 
     <script>
@@ -188,16 +233,23 @@
 
         document.addEventListener("keydown", direction);
 
+        function setDir(dir) {
+            if(dir == "LEFT" && d != "RIGHT") d = "LEFT";
+            else if(dir == "UP" && d != "DOWN") d = "UP";
+            else if(dir == "RIGHT" && d != "LEFT") d = "RIGHT";
+            else if(dir == "DOWN" && d != "UP") d = "DOWN";
+        }
+
         function direction(event) {
             let key = event.keyCode;
             if(key == 80) { // 'P' key
                 togglePause();
                 return;
             }
-            if(key == 37 && d != "RIGHT") d = "LEFT";
-            else if(key == 38 && d != "DOWN") d = "UP";
-            else if(key == 39 && d != "LEFT") d = "RIGHT";
-            else if(key == 40 && d != "UP") d = "DOWN";
+            if(key == 37) setDir('LEFT');
+            else if(key == 38) setDir('UP');
+            else if(key == 39) setDir('RIGHT');
+            else if(key == 40) setDir('DOWN');
         }
 
         function togglePause() {

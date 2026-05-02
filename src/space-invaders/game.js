@@ -60,6 +60,22 @@ function initAliens() {
     }
 }
 
+function setKey(key, value) {
+    keys[key] = value;
+}
+
+function shoot() {
+    if (gameRunning && !isPaused) {
+        bullets.push({
+            x: player.x + player.width / 2 - 2,
+            y: player.y,
+            width: 4,
+            height: 10,
+            color: '#fff'
+        });
+    }
+}
+
 function drawPlayer(p) {
     ctx.font = '40px serif';
     ctx.textAlign = 'center';

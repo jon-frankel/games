@@ -8,12 +8,21 @@
 </head>
 <body>
     <div id="game-container">
-        <a href="../index.html" class="back-btn">← Back to Arcade</a>
+        <a href="../../index.html" class="back-btn">← Back to Arcade</a>
         <div id="ui">
             <div>Score: <span id="score">0</span></div>
             <div>Lives: <span id="lives">3</span></div>
         </div>
         <canvas id="gameCanvas"></canvas>
+        
+        <div class="mobile-controls">
+            <div class="dpad">
+                <div class="ctrl-btn" onmousedown="setKey('ArrowLeft', true)" onmouseup="setKey('ArrowLeft', false)" ontouchstart="setKey('ArrowLeft', true)" ontouchend="setKey('ArrowLeft', false)">←</div>
+                <div class="ctrl-btn" onmousedown="setKey('ArrowRight', true)" onmouseup="setKey('ArrowRight', false)" ontouchstart="setKey('ArrowRight', true)" ontouchend="setKey('ArrowRight', false)">→</div>
+            </div>
+            <div class="ctrl-btn shoot-btn" onmousedown="shoot()" ontouchstart="shoot()">FIRE</div>
+        </div>
+
         <div id="overlay" class="hidden">
             <h1 id="message">GAME OVER</h1>
             <button id="restart-btn">Play Again</button>

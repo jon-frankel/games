@@ -64,6 +64,55 @@
             color: #888;
             font-size: 14px;
         }
+        .mobile-controls {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            z-index: 100;
+        }
+        .dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(2, 60px);
+            gap: 5px;
+        }
+        .ctrl-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ctrl-btn:active {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .shoot-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.3);
+            border: 3px solid salmon;
+            color: salmon;
+        }
+        .shoot-btn:active {
+            background: salmon;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .mobile-controls { display: flex; }
+        }
         .back-btn {
             position: absolute;
             top: 20px;
@@ -85,9 +134,18 @@
 </head>
 <body>
 
-    <a href="../index.html" class="back-btn">← Back to Arcade</a>
+    <a href="../../index.html" class="back-btn">← Back to Arcade</a>
     <div class="ui">
         <div class="score">Score: <span id="scoreVal">0</span></div>
+    </div>
+
+    <div class="mobile-controls">
+        <div class="dpad">
+            <div style="grid-column: 2" class="ctrl-btn" onmousedown="setThrust(true)" onmouseup="setThrust(false)" ontouchstart="setThrust(true)" ontouchend="setThrust(false)">↑</div>
+            <div style="grid-row: 2; grid-column: 1" class="ctrl-btn" onmousedown="setRot(1)" onmouseup="setRot(0)" ontouchstart="setRot(1)" ontouchend="setRot(0)">←</div>
+            <div style="grid-row: 2; grid-column: 3" class="ctrl-btn" onmousedown="setRot(-1)" onmouseup="setRot(0)" ontouchstart="setRot(-1)" ontouchend="setRot(0)">→</div>
+        </div>
+        <div class="ctrl-btn shoot-btn" onmousedown="shootLaser()" ontouchstart="shootLaser()">FIRE</div>
     </div>
 
     <div id="gameOver" class="game-over">
@@ -192,6 +250,17 @@
         document.addEventListener('keydown', keyDown);
         document.addEventListener('keyup', keyUp);
 
+        function setRot(dir) {
+            if (!gameRunning) return;
+            if (dir === 0) ship.rot = 0;
+            else ship.rot = dir * TURN_SPEED / 180 * Math.PI / FPS;
+        }
+
+        function setThrust(val) {
+            if (!gameRunning) return;
+            ship.thrusting = val;
+        }
+
         function keyDown(ev) {
             if (!gameRunning) return;
             switch(ev.keyCode) {
@@ -199,13 +268,13 @@
                     shootLaser();
                     break;
                 case 37: // left
-                    ship.rot = TURN_SPEED / 180 * Math.PI / FPS;
+                    setRot(1);
                     break;
                 case 38: // up
-                    ship.thrusting = true;
+                    setThrust(true);
                     break;
                 case 39: // right
-                    ship.rot = -TURN_SPEED / 180 * Math.PI / FPS;
+                    setRot(-1);
                     break;
             }
         }
@@ -214,13 +283,13 @@
             if (!gameRunning) return;
             switch(ev.keyCode) {
                 case 37: // left
-                    ship.rot = 0;
+                    setRot(0);
                     break;
                 case 38: // up
-                    ship.thrusting = false;
+                    setThrust(false);
                     break;
                 case 39: // right
-                    ship.rot = 0;
+                    setRot(0);
                     break;
             }
         }
