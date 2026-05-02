@@ -101,9 +101,28 @@
             font-size: 22px;
             color: #bdc3c7;
         }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            text-decoration: none;
+            border: 2px solid white;
+            border-radius: 50px;
+            font-family: inherit;
+            font-weight: bold;
+            z-index: 1000;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
     </style>
 </head>
 <body>
+    <a href="../index.html" class="back-btn">← Back to Arcade</a>
     <div class="stats">Score: <span id="score">0</span></div>
     <div id="gameOver">
         <h1>GAME OVER</h1>

@@ -113,9 +113,32 @@
             font-size: 14px;
             text-transform: uppercase;
         }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: transparent;
+            color: var(--neon-yellow);
+            text-decoration: none;
+            border: 2px solid var(--neon-yellow);
+            border-radius: 50px;
+            font-family: inherit;
+            font-weight: bold;
+            text-transform: uppercase;
+            z-index: 1000;
+            transition: all 0.2s;
+            box-shadow: 0 0 10px var(--neon-yellow);
+        }
+        .back-btn:hover {
+            background: var(--neon-yellow);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-yellow);
+        }
     </style>
 </head>
 <body>
+    <a href="../index.html" class="back-btn">← Back to Arcade</a>
     <div class="ui-panel">
         <div>Score: <span id="score">0</span></div>
         <div>Lives: <span id="lives">3</span></div>

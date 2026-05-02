@@ -96,9 +96,29 @@
             color: #fff;
             text-shadow: 1px 1px 0 #000;
         }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            text-decoration: none;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: bold;
+            z-index: 1000;
+            transition: background 0.2s;
+            text-shadow: 1px 1px 0 #000;
+        }
+        .back-btn:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body>
+    <a href="../index.html" class="back-btn">← Back to Arcade</a>
     <div class="stats" id="score">0</div>
     <div id="activePowerUp">GHOST MODE!</div>
     <div id="gameOver">
